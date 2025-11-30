@@ -129,10 +129,7 @@
 		<ItemGroup>
 			<LibFiles Include="lib\**\*" />
 		</ItemGroup>
-		<Copy
-		  SourceFiles="@(LibFiles)"
-		  DestinationFolder="$(OutDir)%(RecursiveDir)"
-		  SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(LibFiles)" DestinationFolder="$(OutDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
 	</Target>
 
 </Project>

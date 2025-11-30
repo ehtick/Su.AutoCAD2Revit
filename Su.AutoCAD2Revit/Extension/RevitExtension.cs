@@ -25,5 +25,10 @@ namespace Su.AutoCAD2Revit.Extension
         {
             return new XYZ(point.X / 304.8, point.Y / 304.8, point.Z / 304.8);
         }
+
+        internal static XYZ ToRevitVector(this Vector3d vector)
+        {
+            return new XYZ(vector.X / 304.8, vector.Y / 304.8, vector.Z / 304.8);
+        }
     }
 }
