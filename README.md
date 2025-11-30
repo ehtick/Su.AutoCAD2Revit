@@ -1,84 +1,120 @@
-﻿# Su.AutoCAD2Revit 库使用文档
+﻿````markdown
+# Su.AutoCAD2Revit 使用文档
 
-## 概述
-使用 Teigha 运行时在 Revit 中读取 AutoCAD DWG 文件，无需安装 AutoCAD。
+**GitHub:** https://github.com/ViewSuSu/Su.AutoCAD2Revit  
+**Gitee:** https://gitee.com/SususuChang/su.-auto-cad2-revit
 
-> **📋 版本支持**:
-> - Revit: 2013 - 2024
-> - AutoCAD: 2013 及以下版本 DWG 格式
+---
 
-## 核心特性
+## 📘 概述
+Su.AutoCAD2Revit 是一个基于 **Teigha Runtime** 的 Revit 插件扩展库，  
+用于在 **无需安装 AutoCAD 的情况下读取 DWG 文件**（包含 Revit 链接的 CAD 图纸与本地 DWG）。
+
+> **📋 版本支持**  
+> - **Revit:** 2013 - 2024  
+> - **AutoCAD DWG:** 2013 及以下格式  
+
+---
+
+## ⭐ 核心特性
 
 ### 🔄 自动坐标转换
-- 自动将 AutoCAD 坐标系转换为 Revit 坐标系
-- 处理图纸的 Transform 变换
-- 自动应用标高设置
+- 自动将 AutoCAD 坐标系精确转换到 Revit 坐标系  
+- 处理 Revit ImportInstance 自身的 Transform  
+- 自动应用 Revit 标高（Elevation）
 
 ### 🧩 智能块处理
-- 自动解析嵌套块结构
-- 正确处理块参照的坐标变换
-- 保持块内元素的相对位置关系
+- 解析 AutoCAD 块（Block）与嵌套块结构  
+- 自动叠加块参照的变换矩阵  
+- 保持块内所有元素相对位置、旋转信息
 
-## 核心类
+### ✏ 文本提取能力
+- 提取文字内容  
+- 支持文本角度、图层、位置、所属块等属性  
+- 坐标均已自动转换为 Revit 世界坐标
 
-### ReadCADService
-主要的图纸读取服务类。
+---
+
+## 📚 核心类说明
+
+### ### `ReadCADService`
+用于读取 DWG 文件或 Revit 链接 CAD 图纸。
 
 #### 构造函数
 ```csharp
-// 从 Revit 链接图纸创建
+// 从 Revit 链接图纸创建（ImportInstance）
 var cadService = new ReadCADService(importInstance, levelHeight);
 
-// 从 DWG 文件创建  
+// 从 DWG 文件创建
 var cadService = new ReadCADService(dwgFilePath, levelHeight);
-```
+````
 
-### CADTextModel
-AutoCAD 文本数据模型。
+---
 
-| 属性 | 说明 |
-|------|------|
-| `Location` | 转换后的 Revit 坐标位置 |
-| `Text` | 文本内容 |
-| `Layer` | 图层名称 |
-| `Angle` | 旋转角度 |
-| `BlockName` | 所属块名称 |
+### ### `CADTextModel`
 
-## 基础用法
+DWG 文本数据模型，转换后的字段全部以 Revit 坐标输出。
 
-### 1. 读取链接图纸文字
+| 属性          | 说明              |
+| ----------- | --------------- |
+| `Location`  | 转换后的 Revit 世界坐标 |
+| `Text`      | 文本内容            |
+| `Layer`     | 图层名称            |
+| `Angle`     | 文本旋转角度          |
+| `BlockName` | 所属块名称（如存在）      |
+
+---
+
+## 🚀 基础用法示例
+
+### 1️⃣ 读取 Revit 链接图纸中的文本
+
 ```csharp
-// 自动处理坐标转换和块变换
+// 自动处理坐标转换 & 块坐标变换
 using (var cadService = new ReadCADService(cadLink, level.Elevation))
 {
     List<CADTextModel> texts = cadService.GetAllTexts();
-    
+
     foreach (var text in texts)
     {
-        // text.Location 已经是正确的 Revit 坐标
         Console.WriteLine($"文字: {text.Text}, 位置: {text.Location}");
     }
 }
 ```
 
-### 2. 直接读取 DWG 文件
+---
+
+### 2️⃣ 读取本地 DWG 文件
+
 ```csharp
 using (var cadService = new ReadCADService(dwgPath, baseElevation))
 {
     var texts = cadService.GetAllTexts();
-    // 所有坐标已自动转换到 Revit 坐标系
+    // 所有坐标已转换为 Revit 世界坐标
 }
 ```
 
-## 坐标转换说明
+---
 
-库自动处理以下坐标变换：
-- AutoCAD 点 → Revit 点（毫米到英尺）
-- 图纸实例的 Transform 变换
-- 绝对标高设置
-- 嵌套块的层级坐标变换
+## 📐 坐标转换说明
 
-## 注意事项
-- 使用 `using` 语句确保资源释放
-- 仅支持 AutoCAD 2013 及以下版本
-- 所有坐标输出均为转换后的 Revit 坐标
+本库内部会自动执行完整的坐标变换链路，包括：
+
+* AutoCAD 世界坐标（毫米） → Revit 世界坐标（英尺）
+* Revit ImportInstance 的整体 Transform
+* DWG 内部的 Block 参照矩阵叠加
+* Revit 标高 Elevation 应用
+* 处理嵌套块的递归变换链路
+
+你无需手动计算任何 Transform，本库会输出最终的 Revit 世界坐标。
+
+---
+
+## ⚠ 注意事项
+
+* 推荐使用 `using` 释放资源
+* 当前仅支持 AutoCAD 2013 及以下 DWG
+* 输出的所有坐标均已自动转换为可直接用于 Revit API 的坐标
+* 若用于商业目的，请确保遵循 ODA（Open Design Alliance）的相关授权许可
+
+---
