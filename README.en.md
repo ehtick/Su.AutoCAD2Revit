@@ -1,84 +1,119 @@
-# Su.AutoCAD2Revit Library Documentation
+![Revit Support](https://img.shields.io/badge/Revit-2013~2024-blue)
+![AutoCAD DWG](https://img.shields.io/badge/AutoCAD%20DWG-2013%20and%20below-green)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-## Overview
-A library that uses Teigha runtime to read AutoCAD DWG files in Revit without requiring AutoCAD installation.
+# Su.AutoCAD2Revit User Documentation
 
-> **📋 Version Support**:
-> - Revit: 2013 - 2024
-> - AutoCAD: DWG format 2013 and below
+**GitHub:** https://github.com/ViewSuSu/Su.AutoCAD2Revit  
+**Gitee:** https://gitee.com/SususuChang/su.-auto-cad2-revit
 
-## Core Features
+---
 
-### 🔄 Automatic Coordinate Transformation
-- Automatically converts AutoCAD coordinate system to Revit coordinate system
-- Handles drawing Transform transformations
-- Automatically applies level elevation settings
+## 📘 Overview
+Su.AutoCAD2Revit is a Revit plugin extension library based on **Teigha**,  
+used for **reading DWG files without installing or opening AutoCAD** (including Revit-linked CAD drawings and local DWG files).
+
+---
+
+## ⭐ Core Features
+
+### 🔄 Automatic Coordinate Conversion
+- Automatically converts AutoCAD coordinate system to Revit coordinate system with precision  
+- Handles Revit ImportInstance's own Transform  
+- Automatically applies Revit elevation
 
 ### 🧩 Smart Block Processing
-- Automatically resolves nested block structures
-- Correctly handles coordinate transformations for block references
-- Maintains relative positions of elements within blocks
+- Parses AutoCAD blocks and nested block structures  
+- Automatically overlays block reference transformation matrices  
+- Maintains relative positions and rotation information of all elements within blocks
 
-## Core Classes
+### ✏ Text Extraction Capability
+- Extracts text content  
+- Supports text angle, layer, position, belonging block and other attributes  
+- All coordinates are automatically converted to Revit world coordinates
 
-### ReadCADService
-Main drawing reading service class.
+---
+
+## 📚 Core Class Description
+
+### `ReadCADService`
+Used for reading DWG files or Revit-linked CAD drawings.
 
 #### Constructors
 ```csharp
-// Create from Revit linked drawing
+// Create from Revit-linked drawing (ImportInstance)
 var cadService = new ReadCADService(importInstance, levelHeight);
 
 // Create from DWG file
 var cadService = new ReadCADService(dwgFilePath, levelHeight);
 ```
 
-### CADTextModel
-AutoCAD text data model.
+---
 
-| Property | Description |
-|------|------|
-| `Location` | Transformed Revit coordinate position |
-| `Text` | Text content |
-| `Layer` | Layer name |
-| `Angle` | Rotation angle |
-| `BlockName` | Parent block name |
+### `CADTextModel`
 
-## Basic Usage
+DWG text data model, all converted fields are output in Revit coordinates.
 
-### 1. Read Text from Linked Drawing
+| Property      | Description |
+| ----------- | --------------- |
+| `Location`  | Converted Revit world coordinates |
+| `Text`      | Text content |
+| `Layer`     | Layer name |
+| `Angle`     | Text rotation angle |
+| `BlockName` | Belonging block name (if exists) |
+
+---
+
+## 🚀 Basic Usage Examples
+
+### 1️⃣ Reading Text from Revit-Linked Drawings
+
 ```csharp
-// Automatically handles coordinate transformation and block transformations
+// Automatically handles coordinate conversion & block coordinate transformation
 using (var cadService = new ReadCADService(cadLink, level.Elevation))
 {
     List<CADTextModel> texts = cadService.GetAllTexts();
-    
+
     foreach (var text in texts)
     {
-        // text.Location is already in correct Revit coordinates
-        Console.WriteLine($"Text: {text.Text}, Position: {text.Location}");
+        Console.WriteLine($"Text: {text.Text}, Location: {text.Location}");
     }
 }
 ```
 
-### 2. Read Directly from DWG File
+---
+
+### 2️⃣ Reading Local DWG Files
+
 ```csharp
 using (var cadService = new ReadCADService(dwgPath, baseElevation))
 {
     var texts = cadService.GetAllTexts();
-    // All coordinates are automatically converted to Revit coordinate system
+    // All coordinates have been converted to Revit world coordinates
 }
 ```
 
-## Coordinate Transformation Details
+---
 
-The library automatically handles the following coordinate transformations:
-- AutoCAD points → Revit points (millimeters to feet)
-- Drawing instance Transform transformations
-- Absolute elevation settings
-- Hierarchical coordinate transformations for nested blocks
+## 📐 Coordinate Conversion Description
 
-## Important Notes
-- Use `using` statement to ensure proper resource disposal
-- Supports only AutoCAD 2013 and below versions
-- All output coordinates are transformed Revit coordinates
+This library automatically performs complete coordinate transformation chain internally, including:
+
+* AutoCAD world coordinates (millimeters) → Revit world coordinates (feet)
+* Overall Transform of Revit ImportInstance
+* Overlay of DWG internal Block reference matrices
+* Application of Revit elevation
+* Processing recursive transformation chain of nested blocks
+
+You don't need to manually calculate any Transform, this library outputs the final Revit world coordinates.
+
+---
+
+## ⚠ Important Notes
+
+* Recommended to use `using` to release resources
+* Currently only supports AutoCAD 2013 and below DWG format
+* All output coordinates have been automatically converted and can be directly used in Revit API
+* If used for commercial purposes, please ensure compliance with ODA (Open Design Alliance) related licensing agreements
+
+---
