@@ -1,4 +1,7 @@
-﻿````markdown
+![Revit Support](https://img.shields.io/badge/Revit-2013~2024-blue)
+![AutoCAD DWG](https://img.shields.io/badge/AutoCAD%20DWG-2013%20及以下-green)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 # Su.AutoCAD2Revit 使用文档
 
 **GitHub:** https://github.com/ViewSuSu/Su.AutoCAD2Revit  
@@ -7,12 +10,8 @@
 ---
 
 ## 📘 概述
-Su.AutoCAD2Revit 是一个基于 **Teigha Runtime** 的 Revit 插件扩展库，  
+Su.AutoCAD2Revit 是一个基于 **Teigha** 的 Revit 插件扩展库，  
 用于在 **无需安装 AutoCAD 的情况下读取 DWG 文件**（包含 Revit 链接的 CAD 图纸与本地 DWG）。
-
-> **📋 版本支持**  
-> - **Revit:** 2013 - 2024  
-> - **AutoCAD DWG:** 2013 及以下格式  
 
 ---
 
@@ -37,7 +36,7 @@ Su.AutoCAD2Revit 是一个基于 **Teigha Runtime** 的 Revit 插件扩展库，
 
 ## 📚 核心类说明
 
-### ### `ReadCADService`
+### `ReadCADService`
 用于读取 DWG 文件或 Revit 链接 CAD 图纸。
 
 #### 构造函数
@@ -47,11 +46,11 @@ var cadService = new ReadCADService(importInstance, levelHeight);
 
 // 从 DWG 文件创建
 var cadService = new ReadCADService(dwgFilePath, levelHeight);
-````
+```
 
 ---
 
-### ### `CADTextModel`
+### `CADTextModel`
 
 DWG 文本数据模型，转换后的字段全部以 Revit 坐标输出。
 
