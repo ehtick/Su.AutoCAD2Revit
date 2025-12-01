@@ -13,7 +13,7 @@ namespace Su.AutoCAD2Revit.Test
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var panel = application.CreatePanel(Path.GetFileNameWithoutExtension(GetType().Assembly.Location));
+            var panel = application.CreateRibbonPanel(Tab.AddIns, "Su.AutoCAD2Revit");
             panel.CreatePushButton<TestCommand>("Test Command");
             return Result.Succeeded;
         }

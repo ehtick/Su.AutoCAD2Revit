@@ -7,10 +7,19 @@ namespace Su.AutoCAD2Revit.Test
     [Transaction(TransactionMode.Manual)]
     internal class TestCommand : IExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(
+            ExternalCommandData commandData,
+            ref string message,
+            ElementSet elements
+        )
         {
-            ImportInstance importInstance = null;
-            using var autoCADReader = new ReadCADService(importInstance, 0);
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
+            var reference = uidoc.Selection.PickObject(
+                Autodesk.Revit.UI.Selection.ObjectType.Element
+            );
+            ImportInstance importInstance = doc.GetElement(reference) as ImportInstance;
+            using AutoCADReader autoCADReader = new AutoCADReader(importInstance, 0);
             var texts = autoCADReader.GetAllTexts();
             string messageText = "";
             for (int i = 0; i < texts.Count; i++)

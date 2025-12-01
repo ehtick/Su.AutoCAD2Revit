@@ -1,6 +1,4 @@
-﻿using Autodesk.Revit.DB;
-
-namespace Su.AutoCAD2Revit
+﻿namespace Su.AutoCAD2Revit
 {
     public class CADModelBase
     {
@@ -14,14 +12,12 @@ namespace Su.AutoCAD2Revit
         /// </summary>
         public string BlockName { get; private set; }
 
-        internal CADModelBase(string layer,  string blockName)
+        internal CADModelBase(string layer, string blockName)
         {
             Layer = layer;
             BlockName = blockName;
         }
 
-        private CADModelBase()
-        {
-        }
+        private CADModelBase() { }
     }
 }

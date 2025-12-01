@@ -64,6 +64,9 @@
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RvtVersion).0.0" PrivateAssets="All" />
 		<PackageReference Include="ricaun.Revit.UI" Version="0.8.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Su.AutoCAD2Revit\Su.AutoCAD2Revit.csproj" />
+	</ItemGroup>
 	<!-- 把被引用项目 lib 下的所有文件复制到当前项目的输出目录 -->
 	<Target Name="CopyTeighaLibsFromProjectRef" AfterTargets="ResolveReferences">
 		<ItemGroup>
@@ -73,9 +76,7 @@
 
 		<Message Text="Copying %(TeighaLibs.Identity) to $(OutDir)" Importance="low" />
 
-		<Copy SourceFiles="@(TeighaLibs)"
-			  DestinationFolder="$(OutDir)%(RecursiveDir)"
-			  SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(TeighaLibs)" DestinationFolder="$(OutDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
 	</Target>
 	
 	<Target Name="GenerateAddinFile" AfterTargets="PostBuildEvent">
@@ -105,9 +106,6 @@
 		<MakeDir Directories="$(AddinOutputPath)" />
 		<WriteLinesToFile File="$(AddinOutputPath)$(AddinFileName)" Lines="$(AddinFileContent)" Overwrite="true" Encoding="UTF-8" />
 	</Target>
-	<ItemGroup>
-	  <ProjectReference Include="..\Su.AutoCAD2Revit\Su.AutoCAD2Revit.csproj" />
-	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="TD_Mgd">
 	    <HintPath>..\Su.AutoCAD2Revit\lib\TD_Mgd.dll</HintPath>

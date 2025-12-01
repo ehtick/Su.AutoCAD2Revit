@@ -1,3 +1,4 @@
+```markdown
 ![Revit Support](https://img.shields.io/badge/Revit-2013~2024-blue)
 ![AutoCAD DWG](https://img.shields.io/badge/AutoCAD%20DWG-2013%20及以下-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
@@ -36,16 +37,16 @@ Su.AutoCAD2Revit 是一个基于 **Teigha** 的 Revit 插件扩展库，
 
 ## 📚 核心类说明
 
-### `ReadCADService`
+### `AutoCADReader`
 用于读取 DWG 文件或 Revit 链接 CAD 图纸。
 
 #### 构造函数
 ```csharp
 // 从 Revit 链接图纸创建（ImportInstance）
-var cadService = new ReadCADService(importInstance, levelHeight);
+var cadService = new AutoCADReader(importInstance, levelHeightZ);
 
 // 从 DWG 文件创建
-var cadService = new ReadCADService(dwgFilePath, levelHeight);
+var cadService = new AutoCADReader(dwgFilePath, levelHeightZ);
 ```
 
 ---
@@ -54,13 +55,14 @@ var cadService = new ReadCADService(dwgFilePath, levelHeight);
 
 DWG 文本数据模型，转换后的字段全部以 Revit 坐标输出。
 
-| 属性          | 说明              |
-| ----------- | --------------- |
-| `Location`  | 转换后的 Revit 世界坐标 |
-| `Text`      | 文本内容            |
-| `Layer`     | 图层名称            |
-| `Angle`     | 文本旋转角度          |
-| `BlockName` | 所属块名称（如存在）      |
+| 属性          | 说明                  |
+| ----------- | ------------------- |
+| `Location`  | 文本插入点转换后的 Revit 世界坐标 |
+| `Center`    | 文本包围盒中心转换后的 Revit 世界坐标 |
+| `Text`      | 文本内容                |
+| `Layer`     | 图层名称                |
+| `Angle`     | 文本旋转角度              |
+| `BlockName` | 所属块名称（如存在）          |
 
 ---
 
@@ -70,9 +72,9 @@ DWG 文本数据模型，转换后的字段全部以 Revit 坐标输出。
 
 ```csharp
 // 自动处理坐标转换 & 块坐标变换
-using (var cadService = new ReadCADService(cadLink, level.Elevation))
+using (var cadReader = new AutoCADReader(cadLink, level.Elevation))
 {
-    List<CADTextModel> texts = cadService.GetAllTexts();
+    List<CADTextModel> texts = cadReader.GetAllTexts();
 
     foreach (var text in texts)
     {
@@ -86,9 +88,9 @@ using (var cadService = new ReadCADService(cadLink, level.Elevation))
 ### 2️⃣ 读取本地 DWG 文件
 
 ```csharp
-using (var cadService = new ReadCADService(dwgPath, baseElevation))
+using (var cadReader = new AutoCADReader(dwgPath, baseElevation))
 {
-    var texts = cadService.GetAllTexts();
+    var texts = cadReader.GetAllTexts();
     // 所有坐标已转换为 Revit 世界坐标
 }
 ```
@@ -111,7 +113,7 @@ using (var cadService = new ReadCADService(dwgPath, baseElevation))
 
 ## ⚠ 注意事项
 
-* 推荐使用 `using` 释放资源
+* **必须使用 `using` 语句或调用 `Dispose()` 释放资源**
 * 当前仅支持 AutoCAD 2013 及以下 DWG
 * 输出的所有坐标均已自动转换为可直接用于 Revit API 的坐标
 * 若用于商业目的，请确保遵循 ODA（Open Design Alliance）的相关授权许可
