@@ -5,14 +5,14 @@
 # Su.AutoCAD2Revit 使用文档
 
 **GitHub:** https://github.com/ViewSuSu/Su.AutoCAD2Revit  
-**Gitee:** https://gitee.com/SususuChang/su.-auto-cad2-revit
+**Gitee:** https://gitee.com/SususuChang/su.-auto-cad2-revit  
+**NuGet:** https://www.nuget.org/packages/Su.AutoCAD2Revit/
 
 ---
 
 ## 📘 概述
 Su.AutoCAD2Revit 是一个基于 **Teigha** 的 Revit 插件扩展库，  
 用于在 **无需安装或无需打开 AutoCAD 的情况下读取 DWG 文件**（包含 Revit 链接的 CAD 图纸与本地 DWG）。
-
 ---
 
 ## ⭐ 核心特性
@@ -31,6 +31,25 @@ Su.AutoCAD2Revit 是一个基于 **Teigha** 的 Revit 插件扩展库，
 - 提取文字内容  
 - 支持文本角度、图层、位置、所属块等属性  
 - 坐标均已自动转换为 Revit 世界坐标
+
+---
+
+## 📦 NuGet 安装
+
+### 包管理器控制台
+```powershell
+Install-Package Su.AutoCAD2Revit
+```
+
+### .NET CLI
+```bash
+dotnet add package Su.AutoCAD2Revit
+```
+
+### 包引用
+```xml
+<PackageReference Include="Su.AutoCAD2Revit" Version="2013.1.0.0" />
+```
 
 ---
 
@@ -117,4 +136,8 @@ using (var cadReader = new AutoCADReader(dwgPath, baseElevation))
 * 输出的所有坐标均已自动转换为可直接用于 Revit API 的坐标
 * 若用于商业目的，请确保遵循 ODA（Open Design Alliance）的相关授权许可
 
----
+
+## 📄 许可证
+
+MIT License - 详见 [LICENSE](https://github.com/ViewSuSu/Su.AutoCAD2Revit/blob/main/LICENSE[link text](https://github.com/ViewSuSu/Su.AutoCAD2Revit/blob/main/LICENSE)) 文件
+```

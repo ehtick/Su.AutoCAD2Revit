@@ -27,7 +27,15 @@ namespace Su.AutoCAD2Revit
         /// </summary>
         public XYZ Centroid { get; private set; }
 
-        internal CADTextModel(XYZ location, XYZ center, string text, string layer, double angle, string blockName) : base(layer, blockName)
+        internal CADTextModel(
+            XYZ location,
+            XYZ center,
+            string text,
+            string layer,
+            double angle,
+            string blockName
+        )
+            : base(layer, blockName)
         {
             Location = location;
             Centroid = center;
