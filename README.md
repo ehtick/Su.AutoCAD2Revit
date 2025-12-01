@@ -11,7 +11,7 @@
 
 ## 📘 概述
 Su.AutoCAD2Revit 是一个基于 **Teigha** 的 Revit 插件扩展库，  
-用于在 **无需安装 AutoCAD 的情况下读取 DWG 文件**（包含 Revit 链接的 CAD 图纸与本地 DWG）。
+用于在 **无需安装或无需打开 AutoCAD 的情况下读取 DWG 文件**（包含 Revit 链接的 CAD 图纸与本地 DWG）。
 
 ---
 
