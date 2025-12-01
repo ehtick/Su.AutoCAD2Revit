@@ -1,4 +1,3 @@
-```markdown
 ![Revit Support](https://img.shields.io/badge/Revit-2013~2024-blue)
 ![AutoCAD DWG](https://img.shields.io/badge/AutoCAD%20DWG-2013%20及以下-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
