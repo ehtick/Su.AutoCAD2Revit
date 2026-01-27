@@ -1,4 +1,4 @@
- [English](README.en.md) | [中文](README.md)
+ [English](README.en.md) | [简体中文](README.md)
 
 ![Revit Support](https://img.shields.io/badge/Revit-2013~2024-blue)
 ![AutoCAD DWG](https://img.shields.io/badge/AutoCAD%20DWG-2013%20及以下-green)
