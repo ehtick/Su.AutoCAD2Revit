@@ -139,3 +139,8 @@ using (var cadReader = new AutoCADReader(dwgPath, baseElevation))
 * 若用于商业目的，请确保遵循 ODA（Open Design Alliance）的相关授权许可
 
 ```
+
+
+## 星曲线图 / Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ViewSuSu/Su.AutoCAD2Revit&type=Date)](https://star-history.com/#ViewSuSu/Su.AutoCAD2Revit&Date)

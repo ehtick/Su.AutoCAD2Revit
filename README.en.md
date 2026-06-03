@@ -120,3 +120,8 @@ You don't need to manually calculate any Transform. This library outputs the fin
 * For commercial use, ensure compliance with ODA (Open Design Alliance) licensing requirements
 
 ---
+
+
+## 星曲线图 / Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ViewSuSu/Su.AutoCAD2Revit&type=Date)](https://star-history.com/#ViewSuSu/Su.AutoCAD2Revit&Date)
