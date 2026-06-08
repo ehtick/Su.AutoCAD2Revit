@@ -138,9 +138,6 @@ using (var cadReader = new AutoCADReader(dwgPath, baseElevation))
 * 输出的所有坐标均已自动转换为可直接用于 Revit API 的坐标
 * 若用于商业目的，请确保遵循 ODA（Open Design Alliance）的相关授权许可
 
-```
-
-
 ## 星曲线图 / Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=ViewSuSu/Su.AutoCAD2Revit&type=Date)](https://star-history.com/#ViewSuSu/Su.AutoCAD2Revit&Date)
